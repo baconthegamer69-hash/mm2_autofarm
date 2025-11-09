@@ -1028,3 +1028,24 @@ print("🖱️ АВТОКЛИК АКТИВЕН (0.4 сек)")
 print("👻 АВТО-ИНВИЗ ПРИ СМЕНЕ UI")
 
 print("🎯 ТАРГЕТИНГ МОНЕТ АКТИВЕН")
+
+-- 🔄 Автоперезаход при превышении лимита памяти (Xeno)
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local Stats = game:GetService("Stats")
+local LocalPlayer = Players.LocalPlayer
+local PlaceId = game.PlaceId
+local JobId = game.JobId
+
+local MAX_MEMORY = 5000 -- MB
+
+while wait(1) do
+    local ClientMemory = Stats:GetTotalMemoryUsageMb()
+    print("Client Memory Usage: " .. math.floor(ClientMemory) .. " MB")
+    
+    if ClientMemory >= MAX_MEMORY then
+        print("⚠️ Превышен лимит памяти! Перезаход...")
+        TeleportService:TeleportToPlaceInstance(PlaceId, JobId, LocalPlayer)
+        break
+    end
+end
